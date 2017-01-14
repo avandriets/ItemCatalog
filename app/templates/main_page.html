@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-3">
+            <h4>Categories</h4>
+
+        {% if user %}
+            <div class="btn-group" role="group" aria-label="...">
+                <a class="btn btn-default"
+                   href="{{ url_for('create_category') }}"
+                   role="button"><span
+                        class="glyphicon glyphicon-plus-sign"></span></a>
+            </div>
+        {% endif %}
+
+            <p></p>
+
+            <div class="list-group">
+                {% for category in categories %}
+                    <a href="{{ url_for('catalog_items',category_id=category.id) }}"
+                       class="list-group-item">
+                        {{ category.name }} <span
+                            class="badge">{{ category.get_items_count() }}</span>
+                    </a>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+            <h4>Latest items(s)</h4>
+
+        {% if user %}
+            <div class="btn-group" role="group" aria-label="...">
+                <a class="btn btn-default" href="{{ url_for('create_item') }}"
+                   role="button"><span class="glyphicon glyphicon-plus-sign"></span></a>
+            </div>
+        {% endif %}
+
+
+            <p></p>
+
+            {% for item in items(current_category) %}
+                <div>
+                    <a href="{{ url_for('get_catalog_item',
+                                category_id=item.category_id,
+                                item_id=item.id) }}">{{ item.title }}
+                        <em>({{ item.category.name }})</em>
+                    </a>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <h4>New category</h4>
+        <hr/>
+        <div class="col-lg-3">
+
+            <form method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}"/>
+
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign"
+                              aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        {{ error }}
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                    <label for="id_subject">Title</label>
+                    <input class="form-control" id="id_subject" type="text"
+                           name="title"
+                           value="{{ title }}"/>
+                </div>
+                <div class="form-group">
+                    <label for="id_content">Description</label>
+                    <textarea class="form-control" id="id_content"
+                              name="description"
+                              rows="8">{{ description }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="sel1">Categoty:</label>
+                    <select class="form-control" id="sel1" name="category">
+                        {% for cat_item in categories %}
+                            {% if category|string() == cat_item.id|string() %}
+                                <option selected="selected"
+                                        value="{{ cat_item.id }}">{{ cat_item.name }}</option>
+                            {% else %}
+                                <option value="{{ cat_item.id }}">{{ cat_item.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Submit"
+                           class="btn btn-default"/>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

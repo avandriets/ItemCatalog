@@ -1,0 +1,20 @@
+{% if user %}
+    <div class="hidden">
+        <form id="logoutForm" action="\logout" method="get"
+              class="navbar-form navbar-right">
+        </form>
+    </div>
+
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="\">{{ user.email }}</a></li>
+        <li>
+{#            <a href="javascript:document.getElementById('gdisconnect').submit()">Exit</a>#}
+            <a href=" {{ url_for('gdisconnect') }}">Logout</a>
+        </li>
+    </ul>
+
+{% else %}
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href=" {{ url_for('show_login') }}">Login</a></li>
+    </ul>
+{% endif %}

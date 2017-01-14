@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-3">
+            <h4>Categories</h4>
+
+        {% if user %}
+            <div class="btn-group" role="group" aria-label="...">
+                <a class="btn btn-default"
+                   href="{{ url_for('create_category') }}"
+                   role="button"><span
+                        class="glyphicon glyphicon-plus-sign"></span></a>
+
+                <a class="btn btn-default"
+                   href="{{ url_for('delete_category',
+                   category_id=current_category.id) }}"
+                   role="button"><span
+                        class="glyphicon glyphicon-trash"></span></a>
+
+                <a class="btn btn-default"
+                   href="{{ url_for('edit_category',
+                   category_id=current_category.id) }}"
+                   role="button"><span
+                        class="glyphicon glyphicon-edit"></span></a>
+            </div>
+        {% endif %}
+
+            <p></p>
+
+            <div class="list-group">
+                {% for category in categories %}
+                    {% if category.id == current_category.id %}
+                        <a href="{{ url_for('catalog_items',category_id=category.id) }}"
+                           class="list-group-item active">
+                            {{ category.name }} <span
+                                class="badge">{{ category.get_items_count() }}</span>
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('catalog_items',category_id=category.id) }}"
+                           class="list-group-item">
+                            {{ category.name }} <span
+                                class="badge">{{ category.get_items_count() }}</span>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+            <h4>{{ current_category.name }} items
+                ( {{ current_category.get_items_count() }} items)</h4>
+
+        {% if user %}
+            <div class="btn-group" role="group" aria-label="...">
+                <a class="btn btn-default"
+                   href="{{ url_for('create_item', category_id=current_category.id) }}"
+                   role="button"><span
+                        class="glyphicon glyphicon-plus-sign"></span></a>
+            </div>
+        {% endif %}
+
+            <p></p>
+
+            {% for item in items(current_category) %}
+                <div>
+                    <a href="{{ url_for('get_catalog_item',
+                                category_id=item.category_id,
+                                item_id=item.id) }}">{{ item.title }}</a>
+                </div>
+                <br>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}

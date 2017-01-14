@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <h4>New category</h4>
+        <hr/>
+        <div class="col-lg-3">
+
+            <form method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}"/>
+
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign"
+                              aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        {{ error }}
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                    <label for="id_subject">Title</label>
+                    <input class="form-control" id="id_subject" type="text"
+                           name="title"
+                           value="{{ current_item.title }}"/>
+                </div>
+                <div class="form-group">
+                    <label for="id_content">Description</label>
+                    <textarea class="form-control" id="id_content"
+                              name="description"
+                              rows="8">{{ current_item.description }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="sel1">Categoty:</label>
+                    <select class="form-control" id="sel1" name="category">
+                        {% for cat_item in categories %}
+                            {% if current_category.id == cat_item.id %}
+                                <option selected="selected"
+                                        value="{{ cat_item.id }}">{{ cat_item.name }}</option>
+                            {% else %}
+                                <option value="{{ cat_item.id }}">{{ cat_item.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-default"/>
+                    <a class="btn btn-default"
+                       href="{{ url_for('get_catalog_item',
+                       category_id=current_category.id,
+                               item_id=current_item.id) }}"
+                       role="button">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

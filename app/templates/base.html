@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ site_name }}</title>
+
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <script type="text/javascript"
+            src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    {% block script %}
+    {% endblock %}
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">{{ site_name }}</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+            </ul>
+            {% include "loginpartial.html" %}
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<script type="text/javascript" src="/static/js/bootstrap.js"></script>
+
+</body>
+</html>

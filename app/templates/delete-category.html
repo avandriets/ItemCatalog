@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign"
+                              aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{ error }}
+        </div>
+        <div>
+            <a href="{{ url_for('catalog_items', category_id=current_category.id) }}">Back to category</a>
+        </div>
+    {% else %}
+        <form method="post">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}"/>
+
+            <div class="form-group">
+                <div class="col-md-4">
+                    <h4>Delete category {{ current_category.name }} ?</h4>
+                    <br>
+                    <input name="Delete" type="submit" value="Delete"
+                           class="btn btn-primary"/>
+
+                    <a class="btn btn-default"
+                       href="{{ url_for('catalog_items', category_id=current_category.id) }}"
+                       role="button">Cancel</a>
+
+                </div>
+            </div>
+        </form>
+    {% endif %}
+
+
+{% endblock %}

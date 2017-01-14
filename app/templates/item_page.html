@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <h4>
+            <a href="{{ url_for('catalog_items', category_id=current_item.category.id) }}">{{ current_item.category.name }}</a>
+        </h4>
+        <hr/>
+        <div class="col-lg-6">
+
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign"
+                              aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            <h3>{{ current_item.title }}</h3>
+
+            <p>Description: {{ current_item.description }}</p>
+
+        {% if user %}
+            <div class="btn-group" role="group" aria-label="...">
+                <a class="btn btn-default"
+                   href="{{ url_for('edit_item',
+                   category_id=current_item.category.id,
+                           item_id=current_item.id) }}"
+                   role="button"><span
+                        class="glyphicon glyphicon-pencil"></span></a>
+
+                <a class="btn btn-default"
+                   href="{{ url_for('delete_item',
+                   category_id=current_category.id,
+                           item_id=current_item.id) }}"
+                   role="button"><span
+                        class="glyphicon glyphicon-trash"></span></a>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}
