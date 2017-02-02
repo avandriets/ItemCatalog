@@ -15,6 +15,8 @@ from app.UserHelper import get_user_id, create_user, get_user_info
 from app.app_decorators import login_required, is_category_exists, \
     is_category_owner, is_item_exists, is_item_owner
 from config import CLIENT_ID
+import os
+from config import BASE_DIR
 
 
 @app.route('/')
@@ -270,7 +272,10 @@ def gconnect():
 
     try:
         # Upgrade the authorization code into a credentials object
-        oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
+        # BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+        file_path = os.path.join(BASE_DIR, 'client_secrets.json')
+
+        oauth_flow = flow_from_clientsecrets(file_path, scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError:

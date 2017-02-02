@@ -31,4 +31,4 @@ CSRF_SESSION_KEY = "secret"
 SECRET_KEY = "secret"
 
 CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+    open(os.path.join(BASE_DIR, 'client_secrets.json'), 'r').read())['web']['client_id']
